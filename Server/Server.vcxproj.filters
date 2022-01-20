@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{6fe6b5e6-17f5-4f0e-baad-fbd481fa79f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Scs">
+      <UniqueIdentifier>{d2a73085-323f-4a53-8fe3-b20b8378e288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\xxhash">
+      <UniqueIdentifier>{37a2f382-dd83-4355-8491-de4a46b2208d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\Scs.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\ScsAddress.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\ScsClient.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\ScsCommon.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\ScsReceiveQueue.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\ScsSendQueue.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\ScsServer.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\ScsSocket.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\ThirdParty\Scs\Scs.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsAddress.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsClient.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsCommon.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsInternal.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsReceiveQueue.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsSendQueue.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsServer.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsSocket.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Definitions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\xxhash\xxhash32.h">
+      <Filter>ThirdParty\xxhash</Filter>
+    </ClInclude>
+    <ClInclude Include="Includes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProtocolMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Packets.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

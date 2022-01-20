@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{bbd65110-d292-4d98-a3e4-da81ba5f48bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Scs">
+      <UniqueIdentifier>{2d3a96e0-425b-40ba-b009-53560f8268e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\xxhash">
+      <UniqueIdentifier>{9205dec6-5ff5-4afa-b762-8d8f404c712e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\aes256">
+      <UniqueIdentifier>{833dd1d2-f614-43f3-96f1-ace4d54738cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\cryptlib">
+      <UniqueIdentifier>{ca7cfc6d-acfb-4bd6-90de-82bcc7c58fd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\cryptlib\pem">
+      <UniqueIdentifier>{353adc36-bac1-43af-83e8-eddcf3d62b6d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\Scs.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\ScsAddress.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\ScsClient.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\ScsCommon.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\ScsReceiveQueue.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\ScsSendQueue.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\ScsServer.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Scs\ScsSocket.cpp">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\aes256\aes256.cpp">
+      <Filter>ThirdParty\aes256</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\cryptlib\include\pem_common.cpp">
+      <Filter>ThirdParty\cryptlib\pem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\cryptlib\include\pem_read.cpp">
+      <Filter>ThirdParty\cryptlib\pem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\cryptlib\include\pem_write.cpp">
+      <Filter>ThirdParty\cryptlib\pem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\cryptlib\include\x509cert.cpp">
+      <Filter>ThirdParty\cryptlib\pem</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\ThirdParty\Scs\Scs.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsAddress.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsClient.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsCommon.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsInternal.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsReceiveQueue.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsSendQueue.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsServer.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Scs\ScsSocket.h">
+      <Filter>ThirdParty\Scs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\xxhash\xxhash32.h">
+      <Filter>ThirdParty\xxhash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\aes256\aes256.hpp">
+      <Filter>ThirdParty\aes256</Filter>
+    </ClInclude>
+    <ClInclude Include="Includes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Packets.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
