@@ -145,7 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\ThirdParty\aes256\aes256.cpp" />
+    <ClCompile Include="..\ThirdParty\aes256\AES.cpp" />
     <ClCompile Include="..\ThirdParty\cryptlib\include\pem_common.cpp" />
     <ClCompile Include="..\ThirdParty\cryptlib\include\pem_read.cpp" />
     <ClCompile Include="..\ThirdParty\cryptlib\include\pem_write.cpp" />
@@ -161,7 +161,7 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\ThirdParty\aes256\aes256.hpp" />
+    <ClInclude Include="..\ThirdParty\aes256\AES.h" />
     <ClInclude Include="..\ThirdParty\Scs\Scs.h" />
     <ClInclude Include="..\ThirdParty\Scs\ScsAddress.h" />
     <ClInclude Include="..\ThirdParty\Scs\ScsClient.h" />
@@ -172,9 +172,13 @@
     <ClInclude Include="..\ThirdParty\Scs\ScsServer.h" />
     <ClInclude Include="..\ThirdParty\Scs\ScsSocket.h" />
     <ClInclude Include="..\ThirdParty\xxhash\xxhash32.h" />
+    <ClInclude Include="ClientMgr.h" />
     <ClInclude Include="Helpers.h" />
+    <ClInclude Include="HWID.h" />
     <ClInclude Include="Includes.h" />
+    <ClInclude Include="PacketBuffer.h" />
     <ClInclude Include="Packets.h" />
+    <ClInclude Include="ProtocolMgr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

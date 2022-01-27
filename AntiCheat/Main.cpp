@@ -1,5 +1,4 @@
-#include "Includes.h"
-
+﻿#include "Includes.h"
 
 static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp)
 {
@@ -52,6 +51,7 @@ char* getMAC() {
 	return mac_addr; // caller must free.
 }
 
+
 int main(int argc, char** argv)
 {
 	char priKey[128] = { 0 };
@@ -61,8 +61,9 @@ int main(int argc, char** argv)
 	strcpy_s(priKey, "pri.key");
 	strcpy_s(pubKey, "pub.key");
 	strcpy_s(seed, "seed");
-	//Helpers::GenerateRSAKey(1024, priKey, pubKey, seed);
 
+	//Helpers::GenerateRSAKey(1024, priKey, pubKey, seed);
+	
 	//RSA encryption and decryption 
 	//char message[1024] = { 0 };
 	//std::cout << "Origin Text:\t" << "Hello World!GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG" << std::endl << std::endl;
@@ -84,7 +85,7 @@ int main(int argc, char** argv)
 
 	client->OnConnect([&](const IClient& client) 
 	{
-		printf("Cliente Conectado\n");
+		printf("Cliente Conectado\n");		
 	});
 
 	client->OnDisconnect([](IClient& client)
@@ -94,32 +95,52 @@ int main(int argc, char** argv)
 
 	client->OnReceiveData([](IClient& client, const void* data, size_t bytes)
 	{
-
+		printf("Recv Keys.\n");
+		//HandleMsg((void*)data, bytes);
 	});
 
-	client->Connect();
+	client->Connect();	
+	ProtocolMgr::Init(client);
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	PACKET_INIT init;
 
-	/*PACKET_HANDSHAKE handshake_in;
-	handshake_in.user_id = 1;
-	handshake_in.user_index = 2;
-	handshake_in.user_level = 10;
 
-	void* buffer;
+	memset(init.privKey, 0, 10);
+	memset(init.pubKey, 0, 10);
+	memset(init.seed, 0, 10);
 
-	printf("TotalSize: %X\n", sizeof(PACKET_HEADER) + sizeof(PACKET_HANDSHAKE));
-	Helpers::Serealize(PROTOCOL_LIST::PROTOCOL_HANDSHAKE, &buffer, &handshake_in, sizeof(PACKET_HANDSHAKE));	
+	strcpy(init.privKey, "LprivKeye");
+	strcpy(init.pubKey, "LpubKeyee");
+	strcpy(init.seed, "Lseedeeee");
 
-	Helpers::RSAEncryptBytes("pub.key", seed, (byte*)&buffer, sizeof(PACKET_HEADER) + sizeof(PACKET_HANDSHAKE));
-	client->Send(&buffer, sizeof(PACKET_HEADER) + sizeof(PACKET_HANDSHAKE));
-	*/
-	//Helpers::RSADecryptBytes("pri.key", (byte*)&buffer, sizeof(PACKET_HEADER) + sizeof(PACKET_HANDSHAKE));
+	//ProtocolMgr::SendMsg(PROTOCOL_LIST::PROTOCOL_INIT, &init, sizeof(PACKET_INIT));
+	//strenc = 
 
+	//std::vector<byte> enc(strenc.begin(), strenc.end());
+
+	//strdec = Helpers::RSADecryptString("pri.key", strenc.c_str());
+	//std::vector<byte> dec(strdec.begin(), strdec.end());
+	//printf("Dec: %s\n", strdec.c_str());
+	//Helpers::hexDump((unsigned char*)&dec[0], dec.size());
+	//Helpers::hexDump((unsigned char*)&dec, 5);
+
+	//printf("getCpuHash(): %X\n", getCpuHash());
+	//printf("HWID1: %s\n", GetDriverSerial(0).c_str());
+	//printf("HWID2: %s\n", GetDriverSerial(1).c_str());
+	//printf("HWID3: %s\n", GetDriverSerial(2).c_str());
+	//system("pause");
+
+	//client->Send((void*)&m_OutBuffer->m_Buffer[0], sizeof(PACKET_HEADER) + sizeof(PACKET_INIT));
+	//m_OutBuffer.release();
+	//printf("TotalSize: %X\n", sizeof(PACKET_HEADER) + sizeof(PACKET_HANDSHAKE));
+	//Helpers::Serealize(PROTOCOL_LIST::PROTOCOL_INIT, &buffer, &handshake_in, sizeof(PACKET_INIT));
 
 	while (!client->HasError())
 	{
-		std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		client->Send("'ABCDEFGHIJKLMN' + '”x19″x84″x04″x08'", 44);
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	}
-
+	printf("Sock error!\n");
     /*CURL* curl;
     CURLcode res;
     std::string readBuffer;

@@ -1,5 +1,7 @@
 #pragma once
 
+#define MAX_PACKET_BUFFER 8192
+
 enum class PROTOCOL_LIST
 {
 	PROTOCOL_UNKNOWN = 0x0000,
@@ -17,18 +19,18 @@ struct PACKET_HEADER
 	PROTOCOL_LIST protocol;
 	uint32_t length;
 	uint32_t checksum;
-	uint32_t tick;
 };
 
 struct PACKET_INIT
 {
-	char pubKey[128] = { 0 };
-	char seed[1024] = { 0 };
+	char pubKey[10];
+	char privKey[10];
+	char seed[10];
 };
 
 struct PACKET_AUTH
 {
-	char steam_id[32];
+	char steam_id[32]; //920652470
 	char guid[255];
 };
 

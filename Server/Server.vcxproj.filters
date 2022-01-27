@@ -22,6 +22,9 @@
     <Filter Include="ThirdParty\xxhash">
       <UniqueIdentifier>{37a2f382-dd83-4355-8491-de4a46b2208d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\aes256">
+      <UniqueIdentifier>{365433c9-1e66-44d3-899b-757307934e71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -50,6 +53,9 @@
     </ClCompile>
     <ClCompile Include="..\ThirdParty\Scs\ScsSocket.cpp">
       <Filter>ThirdParty\Scs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\aes256\AES.cpp">
+      <Filter>ThirdParty\aes256</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +109,12 @@
     </ClInclude>
     <ClInclude Include="Packets.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\aes256\AES.h">
+      <Filter>ThirdParty\aes256</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,16 +13,25 @@
 #include <assert.h>
 #include <stdexcept>
 #include <xxhash/xxhash32.h>
-#include <randpool.h>
-#include <rsa.h>
-#include <hex.h>
-#include <files.h>
+//#include <randpool.h>
+//#include <rsa.h>
+//#include <hex.h>
+//#include <files.h>
 #include <Iphlpapi.h>
 
 #pragma comment(lib, "iphlpapi.lib")
 
 #include "Scs/Scs.h"
-#include "Packets.h"
-#include "Helpers.h"
 
 using namespace Scs;
+
+#include "aes256/AES.h"
+#include "Packets.h"
+#include "Helpers.h"
+#include "HWID.h"
+#include "PacketBuffer.h"
+#include "ProtocolMgr.h"
+#include "ClientMgr.h"
+
+
+

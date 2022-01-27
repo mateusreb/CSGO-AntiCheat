@@ -2,17 +2,36 @@
 
 namespace ProtocolMgr
 {
-	void HandleMsg(IServer& server, void* pMsg, size_t bytes)
+	ServerPtr pServer;
+
+	void Init(ServerPtr Server)
 	{
-		Helpers::RSADecryptBytes("pri.key", (byte*)&pMsg, sizeof(PACKET_HEADER) + sizeof(PACKET_AUTH));
-		PACKET_HEADER header = Helpers::DeserializeProtocol(pMsg, bytes);
-		switch (header.protocol)
+		pServer = Server;
+	}
+
+	template <typename T>
+	void SendMsg(PROTOCOL_LIST protocol, ClientID clientId, T *pMsg, size_t bytes)
+	{
+		void* pBuffer;
+		Helpers::Serealize(protocol, &pBuffer, &pMsg, bytes);
+		pServer->Send(clientId, (const void*)&pBuffer, sizeof(PACKET_HEADER) + bytes);
+	}
+
+	void HandleMsg(PROTOCOL_LIST protocol, std::vector<uint8_t>m_Buffer, ClientID clientId)
+	{
+		//Helpers::RSADecryptBytes("pri.key", (byte*)&m_Buffer[0], m_Buffer.size());
+		//PACKET_HEADER header = Helpers::DeserializeProtocol(pMsg, bytes);
+		//Helpers::RSAEncryptBytes("pub.key", "seed", (byte*)&m_Buffer[0], m_Buffer.size());
+		switch (protocol)
 		{
-		case PROTOCOL_LIST::PROTOCOL_HANDSHAKE:
-			PACKET_AUTH pAuth;
-			if (Helpers::DeserializeMsg(header, &pAuth, pMsg, sizeof(PACKET_AUTH)))
-			{				
-				//printf("PROTOCOL_HANDSHAKE(%i %i %i)\n", pHandShake.user_id, pHandShake.user_index, pHandShake.user_level);
+		case PROTOCOL_LIST::PROTOCOL_INIT:
+			{
+				PACKET_INIT *pInit = reinterpret_cast<PACKET_INIT*>(&m_Buffer[0]);
+				printf("PROTOCOL_INIT\nPrivKey: %s \nPublicKey: %s \nSeed: %s\n", pInit->privKey, pInit->pubKey, pInit->seed);
+				//if (Helpers::DeserializeMsg(header, &pInit, pMsg, sizeof(PACKET_AUTH)))
+				//{
+				//	printf("PROTOCOL_INIT:\nPrivKey: %s\nPublicKey: %s\nSeed: %s\n", pInit.privKey, pInit.pubKey, pInit.seed);
+				//}
 			}
 			break;
 		case PROTOCOL_LIST::PROTOCOL_LOGIN:

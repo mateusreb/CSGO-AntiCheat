@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{7dcd04c9-2cd6-4389-8ce1-b5ef109a93c1}</ProjectGuid>
-    <RootNamespace>Server</RootNamespace>
+    <ProjectGuid>{5468cb6c-f2ae-44ad-82f8-639bd6e55f2d}</ProjectGuid>
+    <RootNamespace>MSRProtect</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -33,11 +33,11 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -75,8 +75,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>F:\DEV\AntiCheat\ThirdParty\cryptlib\include;F:\DEV\AntiCheat\ThirdParty;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\DEV\AntiCheat\ThirdParty\cryptlib\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>F:\DEV\AntiCheat\MSRProtect;F:\DEV\sourcemod-master\public\sourcepawn\amtl;F:\DEV\sourcemod-master\public\sourcepawn;F:\DEV\sourcemod-master\public\extensions;F:\DEV\sourcemod-master\public;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -104,15 +103,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>cryptlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>F:\csgo\csgo\csgo\addons\sourcemod\extensions\msrprotect.ext$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -144,37 +143,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\ThirdParty\aes256\AES.cpp" />
-    <ClCompile Include="..\ThirdParty\Scs\Scs.cpp" />
-    <ClCompile Include="..\ThirdParty\Scs\ScsAddress.cpp" />
-    <ClCompile Include="..\ThirdParty\Scs\ScsClient.cpp" />
-    <ClCompile Include="..\ThirdParty\Scs\ScsCommon.cpp" />
-    <ClCompile Include="..\ThirdParty\Scs\ScsReceiveQueue.cpp" />
-    <ClCompile Include="..\ThirdParty\Scs\ScsSendQueue.cpp" />
-    <ClCompile Include="..\ThirdParty\Scs\ScsServer.cpp" />
-    <ClCompile Include="..\ThirdParty\Scs\ScsSocket.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="..\..\sourcemod-master\public\smsdk_ext.cpp" />
+    <ClCompile Include="extension.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\ThirdParty\aes256\AES.h" />
-    <ClInclude Include="..\ThirdParty\Scs\Scs.h" />
-    <ClInclude Include="..\ThirdParty\Scs\ScsAddress.h" />
-    <ClInclude Include="..\ThirdParty\Scs\ScsClient.h" />
-    <ClInclude Include="..\ThirdParty\Scs\ScsCommon.h" />
-    <ClInclude Include="..\ThirdParty\Scs\ScsInternal.h" />
-    <ClInclude Include="..\ThirdParty\Scs\ScsReceiveQueue.h" />
-    <ClInclude Include="..\ThirdParty\Scs\ScsSendQueue.h" />
-    <ClInclude Include="..\ThirdParty\Scs\ScsServer.h" />
-    <ClInclude Include="..\ThirdParty\Scs\ScsSocket.h" />
-    <ClInclude Include="..\ThirdParty\xxhash\xxhash32.h" />
-    <ClInclude Include="ClientMgr.h" />
-    <ClInclude Include="Definitions.h" />
-    <ClInclude Include="Helpers.h" />
-    <ClInclude Include="Includes.h" />
-    <ClInclude Include="PacketBuffer.h" />
-    <ClInclude Include="Packets.h" />
-    <ClInclude Include="ServerMgr.h" />
-    <ClInclude Include="ProtocolMgr.h" />
+    <ClInclude Include="extension.h" />
+    <ClInclude Include="smsdk_config.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

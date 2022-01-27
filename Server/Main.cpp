@@ -19,7 +19,6 @@ int main(int argc, char** argv)
 		pClientMgr->ResetClients();
 	}	*/
 
-	
-
+	ServerMgr::Start();
 	return 0;
 }

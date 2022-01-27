@@ -1,13 +1,90 @@
 #pragma once
 
-using namespace CryptoPP;
+//using namespace CryptoPP;
 
 namespace Helpers
 {
+	void enc(char* temp, int length)
+	{ 
+		for (int i = 0; i < length / 2; i++)
+		{
+			temp[i]++;
+			temp[length - 1 - i]++;
+			char stemp = temp[i];
+			temp[i] = temp[length - 1 - i];
+			temp[length - 1 - i] = stemp;
+		}
+	}
+
+	void dec(char* temp, int length)
+	{ 
+		for (int i = 0; i < length / 2; i++)
+		{
+			temp[i]--;
+			temp[length - 1 - i]--;
+			char stemp = temp[i];
+			temp[i] = temp[length - 1 - i];
+			temp[length - 1 - i] = stemp;
+		}
+	}
+
+	char* Encrypt(char* data, int length, int shift)
+	{
+		char first = data[0];
+		for (int i = 0; i < length; i++)
+		{
+			data[i] = (char)(data[i + 1] >> (8 - shift) | (data[i] << shift));
+		}
+		data[length] = (char)(first >> (8 - shift) | (data[length] << shift));
+		return data;
+	}
+
+	char* Decrypt(char* data, int length, int shift)
+	{
+		char last = data[length - 1];
+		for (int i = length - 1; i > 0; i--)
+		{
+			data[i] = (char)(data[i - 1] << (8 - shift) | data[i] >> shift);
+		}
+		data[0] = (char)(last << (8 - shift) | data[0] >> shift);
+		return data;
+	}
+
+	void hexDump(unsigned char* pc, int len)
+	{
+		int i;
+		unsigned char buff[17];
+		printf("------------------------------------------------------------------------\n");
+		for (i = 0; i < len; i++)
+		{
+			if ((i % 16) == 0)
+			{
+				if (i != 0)
+					printf("  %s\n", buff);
+				printf("%04X ", i);
+			}
+			printf(" %02X", pc[i]);
+			if ((pc[i] < 0x20) || (pc[i] > 0x7e)) {
+				buff[i % 16] = '.';
+			}
+			else {
+				buff[i % 16] = pc[i];
+			}
+
+			buff[(i % 16) + 1] = '\0';
+		}
+		while ((i % 16) != 0)
+		{
+			printf("   ");
+			i++;
+		}
+		printf("  %s\n\n", buff);
+	}
+
 	//------------------------ 
 	//Define the global random number pool 
 	//------------------------ 
-	RandomPool& GlobalRNG()
+	/*RandomPool& GlobalRNG()
 	{
 		static RandomPool randomPool;
 		return randomPool;
@@ -21,40 +98,74 @@ namespace Helpers
 		RSAES_OAEP_SHA_Decryptor priv(randPool, keyLength);
 		FileSink privFile(privFilename);
 		priv.AccessMaterial().Save(privFile);
+		
 		privFile.MessageEnd();
 
 		RSAES_OAEP_SHA_Encryptor pub(priv);
 		FileSink pubFile(pubFilename);
-		pub.AccessMaterial().Save(pubFile);
+		pub.AccessMaterial().Save(pubFile);		
 		pubFile.MessageEnd();
 	}
 
 	//------------------------ 
 	//RSA encryption 
 	//------------------------ 
-	void RSAEncryptBytes(const char* pubFilename, const char* seed, byte* buffer, size_t bytes)
+	std::vector<byte> RSAEncryptBytes(const char* pubFilename, const char* seed, std::vector<byte> buffer, size_t bytes)
 	{
+		std::vector<byte> out(buffer.size(), 0);
 		FileSource pubFile(pubFilename, true);
 		RSAES_OAEP_SHA_Encryptor pub(pubFile);
 		RandomPool randPool;
-		randPool.IncorporateEntropy((byte*)seed, strlen(seed));
-		ArraySource(buffer, true, new PK_EncryptorFilter(randPool, pub, new ArraySink(buffer, bytes)));
+		randPool.IncorporateEntropy((byte*)seed, strlen(seed));		
+		ArraySource(&buffer[0], true, new PK_EncryptorFilter(randPool, pub, new ArraySink(out.data(), out.size())));
+		return out;
 	}
 
 	//------------------------ 
 	//RSA decryption 
 	//------------------------ 
-	void RSADecryptBytes(const char* privFilename, byte* buffer, size_t bytes)
+	std::vector<byte> RSADecryptBytes(const char* privFilename, std::vector<byte> buffer, size_t bytes)
+	{
+		std::vector<byte> out(buffer.size(), 0);
+		FileSource privFile(privFilename, true);
+		RSAES_OAEP_SHA_Decryptor priv(privFile);		
+		ArraySource(&buffer[0], true, new PK_DecryptorFilter(GlobalRNG(), priv, new ArraySink(out.data(), out.size())));
+		return out;
+	}
+
+	std::string RSAEncryptString(const char* pubFilename, const char* seed, const char* message)
+	{
+		FileSource pubFile(pubFilename, true);
+		RSAES_OAEP_SHA_Encryptor pub(pubFile);
+
+		RandomPool randPool;
+		randPool.IncorporateEntropy((byte*)seed, strlen(seed));
+
+		std::string result;
+		StringSource(message, true, new PK_EncryptorFilter(randPool, pub, new StringSink(result)));
+		return result;
+	}
+
+	std::string RSADecryptString(const char* privFilename, const char* ciphertext)
 	{
 		FileSource privFile(privFilename, true);
 		RSAES_OAEP_SHA_Decryptor priv(privFile);
-		ArraySource(buffer, true, new PK_DecryptorFilter(GlobalRNG(), priv, new ArraySink(buffer, bytes)));
-	}
 
-	template <typename T>
-	bool Serealize(PROTOCOL_LIST protocol, void* out, T* in, size_t bytes)
+		std::string result;
+		StringSource(ciphertext, true, new PK_DecryptorFilter(GlobalRNG(), priv, new StringSink(result)));
+		return result;
+	}*/
+
+
+	//template <typename T>
+	bool Serealize(PROTOCOL_LIST protocol, void* out, const void* in, size_t bytes)
 	{
+		//std::vector<uint8_t> m_Buffer(sizeof(PACKET_HEADER) + bytes, 0);
 		PACKET_HEADER header;
+		//memset(&header, 0, sizeof(PACKET_HEADER));
+		//auto pCryptedPacket = reinterpret_cast<const PACKET_HEADER*>(in);
+
+		//memset(out, 0, sizeof(PACKET_HEADER));
 		if (bytes > 0)
 		{
 			uint32_t myseed = 0;
@@ -62,12 +173,19 @@ namespace Helpers
 			myhash.add(in, bytes);
 
 			header.protocol = protocol;
-			header.length = (uint32_t)bytes;
-			header.checksum = myhash.hash();
+			header.length = (uint32_t)5;
+			header.checksum = 0x666666;
+
 			if (header.length > 0)
 			{
-				memcpy(out, &header, sizeof(PACKET_HEADER));
-				memcpy((void*)((char*)out + sizeof(PACKET_HEADER)), in, header.length);
+				//memcpy(&m_Buffer[0], &header, sizeof(PACKET_HEADER));
+				//memcpy(&m_Buffer[sizeof(PACKET_HEADER)], in, header.length);
+				//hexDump((unsigned char*)&header, sizeof(PACKET_HEADER) + sizeof(PACKET_INIT));
+				//out = &m_Buffer;
+
+				//memcpy(header.buffer, in, bytes);
+				//memcpy(out, &header, sizeof(PACKET_HEADER)-1);
+				hexDump((unsigned char*)out, sizeof(PACKET_HEADER) + sizeof(PACKET_INIT));
 				return true;
 			}
 		}
@@ -81,8 +199,8 @@ namespace Helpers
 		{
 			uint32_t myseed = 0;
 			XXHash32 myhash(myseed);
-			memcpy(&header, &in, sizeof(PACKET_HEADER));
-			printf("Packet: %X %i %X\n", header.protocol, header.length, header.checksum);
+			memcpy(&header, in, sizeof(PACKET_HEADER));
+			printf("Packet: %X %X %X\n", header.protocol, header.length, header.checksum);
 			return header;
 		}
 		return header;
@@ -93,8 +211,8 @@ namespace Helpers
 	{
 		uint32_t myseed = 0;
 		XXHash32 myhash(myseed);
-		printf("Header: %X %X %i\n", header.protocol, header.checksum, header.length);
 		memcpy(out, (const void*)((char*)in + sizeof(PACKET_HEADER)), bytes);
+		
 		myhash.add(out, bytes);
 		printf("Hash: %X - %X\n", myhash.hash(), header.checksum);
 		if (header.checksum == myhash.hash())
@@ -102,5 +220,63 @@ namespace Helpers
 			return true;
 		}
 		return false;
+	}
+
+	void DecryptData(unsigned char* lpMsg, int size, unsigned char key)
+	{
+		unsigned char keys[] =
+		{
+				0xEC, 0x48, 0x4E, 0x18, 0x93, 0x4C, 0x98, 0x7F, 0xDA, 0x43, 0x89, 0x6A, 0x1E, 0xAA, 0xF9,
+				0x65, 0x07, 0x22, 0xD8, 0x52, 0x01, 0xCA, 0x61, 0x7A, 0x85, 0x91, 0x54, 0x08, 0xE6, 0x8D,
+				0x41, 0xDD, 0xD1, 0xC8, 0x72, 0x31, 0x94, 0xFB, 0xC7, 0x4F, 0xE7, 0x9C, 0x3E, 0x46, 0xD5,
+				0xE4, 0x76, 0xAE, 0xAB, 0x77, 0xBF, 0x11, 0x09, 0x51, 0xD7, 0x55, 0x39, 0x45, 0xA4, 0xFE,
+				0xBA, 0x9A, 0x6E, 0xB8, 0x2C, 0x57, 0x32, 0x2A, 0x5F, 0x50, 0xD4, 0x5B, 0xB3, 0x3A, 0xA6,
+				0x9B, 0x3C, 0x14, 0xDC, 0x1D, 0xFC, 0x27, 0x6C, 0x86, 0x17, 0x5A, 0x5C, 0xDB, 0x78, 0x75,
+				0x70, 0xF7, 0x3D, 0x8E, 0xE1, 0x05, 0x0D, 0xF3, 0x20, 0x6F, 0x8C, 0x36, 0x7C, 0x69, 0x06,
+				0xA3, 0x7D, 0xCF, 0xE3, 0x3B, 0x67, 0x40, 0xF8, 0xFA, 0xA2, 0x0C, 0xB6, 0xAD, 0xC6, 0xA0,
+				0xBE, 0xA1, 0x37, 0xB0, 0xB2, 0x12, 0x9E, 0x23, 0xD9, 0xD0, 0xCD, 0x4B, 0x84, 0x1C, 0xD6,
+				0xED, 0xE8, 0xC1, 0x3F, 0x2F, 0xB5, 0x38, 0x8A, 0x71, 0xF2, 0x28, 0xC3, 0xD2, 0x6D, 0xB9,
+				0x30, 0xA9, 0x73, 0xA5, 0x02, 0x5D, 0xC9, 0x10, 0x62, 0xFD, 0x47, 0xAF, 0x81, 0x2B, 0x9D,
+				0xC0, 0x90, 0x99, 0x74, 0x49, 0x44, 0xB4, 0x8F, 0x92, 0x0E, 0xB1, 0xE0, 0x0B, 0x0A, 0x7E,
+				0x95, 0x96, 0x34, 0x68, 0x53, 0xCB, 0xEF, 0xCC, 0x2D, 0x56, 0xEE, 0xF0, 0x24, 0x1B, 0xF5,
+				0x66, 0xD3, 0x03, 0x00, 0x15, 0x4A, 0xE2, 0xA7, 0x58, 0x1A, 0xE5, 0x29, 0x63, 0x25, 0xB7,
+				0xCE, 0xBB, 0xF4, 0x7B, 0x4D, 0xBD, 0x35, 0x79, 0x0F, 0x80, 0x26, 0xE9, 0xAC, 0xEB, 0x97,
+				0x16, 0x82, 0xA8, 0xBC, 0x13, 0x21, 0x19, 0x1F, 0x2E, 0xC2, 0x87, 0x88, 0x9F, 0x83, 0xEA,
+				0x59, 0x42, 0xC5, 0x04, 0x5E, 0x60, 0xF6, 0x33, 0xC4, 0xF1, 0x6B, 0x64, 0xDE, 0x8B, 0xDF,
+				0xFF
+		};
+		for (int n = 0; n < size; n++)
+		{
+			lpMsg[n] = (unsigned char)(lpMsg[n] + key) ^ keys[key];
+		}
+	}
+
+	void EncryptData(unsigned char* lpMsg, int size, unsigned char key)
+	{
+		unsigned char keys[] =
+		{
+				0xEC, 0x48, 0x4E, 0x18, 0x93, 0x4C, 0x98, 0x7F, 0xDA, 0x43, 0x89, 0x6A, 0x1E, 0xAA, 0xF9,
+				0x65, 0x07, 0x22, 0xD8, 0x52, 0x01, 0xCA, 0x61, 0x7A, 0x85, 0x91, 0x54, 0x08, 0xE6, 0x8D,
+				0x41, 0xDD, 0xD1, 0xC8, 0x72, 0x31, 0x94, 0xFB, 0xC7, 0x4F, 0xE7, 0x9C, 0x3E, 0x46, 0xD5,
+				0xE4, 0x76, 0xAE, 0xAB, 0x77, 0xBF, 0x11, 0x09, 0x51, 0xD7, 0x55, 0x39, 0x45, 0xA4, 0xFE,
+				0xBA, 0x9A, 0x6E, 0xB8, 0x2C, 0x57, 0x32, 0x2A, 0x5F, 0x50, 0xD4, 0x5B, 0xB3, 0x3A, 0xA6,
+				0x9B, 0x3C, 0x14, 0xDC, 0x1D, 0xFC, 0x27, 0x6C, 0x86, 0x17, 0x5A, 0x5C, 0xDB, 0x78, 0x75,
+				0x70, 0xF7, 0x3D, 0x8E, 0xE1, 0x05, 0x0D, 0xF3, 0x20, 0x6F, 0x8C, 0x36, 0x7C, 0x69, 0x06,
+				0xA3, 0x7D, 0xCF, 0xE3, 0x3B, 0x67, 0x40, 0xF8, 0xFA, 0xA2, 0x0C, 0xB6, 0xAD, 0xC6, 0xA0,
+				0xBE, 0xA1, 0x37, 0xB0, 0xB2, 0x12, 0x9E, 0x23, 0xD9, 0xD0, 0xCD, 0x4B, 0x84, 0x1C, 0xD6,
+				0xED, 0xE8, 0xC1, 0x3F, 0x2F, 0xB5, 0x38, 0x8A, 0x71, 0xF2, 0x28, 0xC3, 0xD2, 0x6D, 0xB9,
+				0x30, 0xA9, 0x73, 0xA5, 0x02, 0x5D, 0xC9, 0x10, 0x62, 0xFD, 0x47, 0xAF, 0x81, 0x2B, 0x9D,
+				0xC0, 0x90, 0x99, 0x74, 0x49, 0x44, 0xB4, 0x8F, 0x92, 0x0E, 0xB1, 0xE0, 0x0B, 0x0A, 0x7E,
+				0x95, 0x96, 0x34, 0x68, 0x53, 0xCB, 0xEF, 0xCC, 0x2D, 0x56, 0xEE, 0xF0, 0x24, 0x1B, 0xF5,
+				0x66, 0xD3, 0x03, 0x00, 0x15, 0x4A, 0xE2, 0xA7, 0x58, 0x1A, 0xE5, 0x29, 0x63, 0x25, 0xB7,
+				0xCE, 0xBB, 0xF4, 0x7B, 0x4D, 0xBD, 0x35, 0x79, 0x0F, 0x80, 0x26, 0xE9, 0xAC, 0xEB, 0x97,
+				0x16, 0x82, 0xA8, 0xBC, 0x13, 0x21, 0x19, 0x1F, 0x2E, 0xC2, 0x87, 0x88, 0x9F, 0x83, 0xEA,
+				0x59, 0x42, 0xC5, 0x04, 0x5E, 0x60, 0xF6, 0x33, 0xC4, 0xF1, 0x6B, 0x64, 0xDE, 0x8B, 0xDF,
+				0xFF
+		};
+		for (int n = 0; n < size; n++)
+		{
+			lpMsg[n] = (lpMsg[n] ^ keys[key]) - key;
+		}
 	}
 }

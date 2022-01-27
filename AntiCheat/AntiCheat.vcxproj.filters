@@ -60,9 +60,6 @@
     <ClCompile Include="..\ThirdParty\Scs\ScsSocket.cpp">
       <Filter>ThirdParty\Scs</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\aes256\aes256.cpp">
-      <Filter>ThirdParty\aes256</Filter>
-    </ClCompile>
     <ClCompile Include="..\ThirdParty\cryptlib\include\pem_common.cpp">
       <Filter>ThirdParty\cryptlib\pem</Filter>
     </ClCompile>
@@ -74,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="..\ThirdParty\cryptlib\include\x509cert.cpp">
       <Filter>ThirdParty\cryptlib\pem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\aes256\AES.cpp">
+      <Filter>ThirdParty\aes256</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -107,9 +107,6 @@
     <ClInclude Include="..\ThirdParty\xxhash\xxhash32.h">
       <Filter>ThirdParty\xxhash</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\aes256\aes256.hpp">
-      <Filter>ThirdParty\aes256</Filter>
-    </ClInclude>
     <ClInclude Include="Includes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -117,6 +114,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Helpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProtocolMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\aes256\AES.h">
+      <Filter>ThirdParty\aes256</Filter>
+    </ClInclude>
+    <ClInclude Include="HWID.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
